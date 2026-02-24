@@ -24,42 +24,22 @@
                             class="w-20 h-20 bg-primary flex items-center justify-center clip-hexagon text-white shadow-lg group-hover:scale-110 transition-transform duration-500">
 
                             @if($sol['icon'] === 'clock')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <circle cx="12" cy="12" r="10" stroke-width="2" />
-                                    <path d="M12 6v6l4 2" stroke-width="2" stroke-linecap="round" />
-                                </svg>
+                                <i data-lucide="clock-4" class="w-8 h-8"></i>
 
                             @elseif($sol['icon'] === 'briefcase')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path d="M20 13V7a2 2 0 00-2-2h-3V4a2 2 0 00-2-2h-2a2 2 0 00-2 2v1H6a2 2 0 00-2 2v6"
-                                        stroke-width="2" />
-                                </svg>
+                                <i data-lucide="briefcase" class="w-8 h-8"></i>
 
                             @elseif($sol['icon'] === 'trending-up')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path d="M3 17l6-6 4 4 8-8" stroke-width="2" stroke-linecap="round" />
-                                </svg>
+                                <i data-lucide="trending-up" class="w-8 h-8"></i>
 
                             @elseif($sol['icon'] === 'lightbulb')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path d="M12 3a6 6 0 00-3 11v2h6v-2a6 6 0 00-3-11z" stroke-width="2" />
-                                </svg>
+                                <i data-lucide="lightbulb" class="w-8 h-8"></i>
 
                             @elseif($sol['icon'] === 'chart')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path d="M3 3v18h18M9 17V9m4 8V5m4 12v-6" stroke-width="2" />
-                                </svg>
+                                <i data-lucide="bar-chart-3" class="w-8 h-8"></i>
 
                             @else
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path d="M12 22a10 10 0 100-20 10 10 0 000 20z" stroke-width="2" />
-                                </svg>
+                                <i data-lucide="circle-check-big" class="w-8 h-8"></i>
                             @endif
 
                         </div>

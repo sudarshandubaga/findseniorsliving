@@ -25,26 +25,11 @@
                             class="absolute -bottom-8 left-8 bg-primary w-16 h-16 flex items-center justify-center clip-hexagon shadow-xl text-white">
 
                             @if($act['icon'] === 'briefcase')
-                                <!-- Briefcase SVG -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M20 13V7a2 2 0 00-2-2h-3V4a2 2 0 00-2-2h-2a2 2 0 00-2 2v1H6a2 2 0 00-2 2v6m16 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16 0H4" />
-                                </svg>
+                                <i data-lucide="briefcase" class="w-7 h-7"></i>
                             @elseif($act['icon'] === 'trending-up')
-                                <!-- Trending Up SVG -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 17l6-6 4 4 8-8" />
-                                </svg>
+                                <i data-lucide="trending-up" class="w-7 h-7"></i>
                             @else
-                                <!-- User SVG -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 14a4 4 0 100-8 4 4 0 000 8zm0 2c-4 0-7 2-7 4v1h14v-1c0-2-3-4-7-4z" />
-                                </svg>
+                                <i data-lucide="user" class="w-7 h-7"></i>
                             @endif
 
                         </div>

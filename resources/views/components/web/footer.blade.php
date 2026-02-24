@@ -7,12 +7,7 @@
             <div class="flex items-center space-x-3 mb-10">
                 <a href="{{ route('home') }}" class="flex items-center space-x-3">
                     <div class="bg-primary p-2 rounded-sm shadow-lg">
-                        <!-- Simple BarChart Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="text-white" width="28" height="28" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 3v18h18M9 17V9m4 8V5m4 12v-6" />
-                        </svg>
+                        <i data-lucide="bar-chart-3" class="text-white w-7 h-7"></i>
                     </div>
                     <div>
                         <h1 class="text-3xl font-black leading-none tracking-tighter">
@@ -33,10 +28,11 @@
             <!-- Social Icons -->
             <div class="flex space-x-5">
                 @foreach(['facebook', 'twitter', 'instagram', 'linkedin'] as $social)
-                    <div
+                    <a href="#"
                         class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-all duration-300 cursor-pointer group">
-                        <span class="text-sm uppercase">{{ substr($social, 0, 1) }}</span>
-                    </div>
+                        <i data-lucide="{{ $social }}"
+                            class="w-4 h-4 text-gray-400 group-hover:text-white transition-colors"></i>
+                    </a>
                 @endforeach
             </div>
         </div>
@@ -51,7 +47,8 @@
                 <ul class="space-y-4 text-gray-500 text-base">
                     @foreach($menu['links'] as $link)
                         <li class="hover:text-primary cursor-pointer transition-all duration-300 flex items-center group">
-                            <span class="mr-2 group-hover:translate-x-1 transition-transform">›</span>
+                            <i data-lucide="chevron-right"
+                                class="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform text-primary/50"></i>
                             {{ $link }}
                         </li>
                     @endforeach
@@ -70,14 +67,20 @@
             </p>
 
             <div class="flex space-x-6 mt-4 md:mt-0">
-                <a href="{{ url('/legal/privacy-policy') }}" class="hover:text-primary transition-colors">
-                    Privacy Policy
+                <a href="{{ url('/legal/privacy-policy') }}"
+                    class="hover:text-primary transition-colors flex items-center space-x-1">
+                    <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+                    <span>Privacy Policy</span>
                 </a>
-                <a href="{{ url('/legal/terms-conditions') }}" class="hover:text-primary transition-colors">
-                    Terms of Service
+                <a href="{{ url('/legal/terms-conditions') }}"
+                    class="hover:text-primary transition-colors flex items-center space-x-1">
+                    <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                    <span>Terms of Service</span>
                 </a>
-                <a href="{{ url('/legal/disclaimer') }}" class="hover:text-primary transition-colors">
-                    Disclaimer
+                <a href="{{ url('/legal/disclaimer') }}"
+                    class="hover:text-primary transition-colors flex items-center space-x-1">
+                    <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+                    <span>Disclaimer</span>
                 </a>
             </div>
 
@@ -85,11 +88,8 @@
             <button @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
                 class="mt-6 md:mt-0 bg-primary p-4 rounded-sm hover:bg-opacity-90 transition-all shadow-lg group">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="text-white group-hover:-translate-y-1 transition-transform" width="24" height="24"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-                </svg>
+                <i data-lucide="arrow-up"
+                    class="text-white group-hover:-translate-y-1 transition-transform w-6 h-6"></i>
             </button>
 
         </div>

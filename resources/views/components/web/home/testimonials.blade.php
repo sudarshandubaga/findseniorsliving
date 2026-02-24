@@ -51,9 +51,9 @@
                             </p>
                         </div>
                     </div>
-                    <div class="flex text-primary mb-6 text-xl">
+                    <div class="flex space-x-1 text-primary mb-6">
                         @for($s = 1; $s <= 5; $s++)
-                            <span>★</span>
+                            <i data-lucide="star" class="w-4 h-4 fill-primary"></i>
                         @endfor
                     </div>
                     <h4 class="font-bold text-2xl mb-1">{{ $t['name'] }}</h4>

@@ -53,10 +53,7 @@
     <button @click="prev"
         class="absolute left-8 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors z-20 hidden md:block">
 
-        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 19l-7-7 7-7" />
-        </svg>
+        <i data-lucide="chevron-left" class="w-16 h-16 stroke-1"></i>
 
     </button>
 
@@ -64,10 +61,7 @@
     <button @click="next"
         class="absolute right-8 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors z-20 hidden md:block">
 
-        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7" />
-        </svg>
+        <i data-lucide="chevron-right" class="w-16 h-16 stroke-1"></i>
 
     </button>
 

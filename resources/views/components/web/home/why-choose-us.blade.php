@@ -38,25 +38,13 @@
                             class="bg-primary w-14 h-14 flex items-center justify-center rounded-sm shadow-lg mt-1 text-white">
 
                             @if($feature['icon'] === 'lightbulb')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 3a6 6 0 00-3 11v2h6v-2a6 6 0 00-3-11zM9 21h6" />
-                                </svg>
+                                <i data-lucide="lightbulb" class="w-7 h-7"></i>
 
                             @elseif($feature['icon'] === 'check-circle')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2l4-4M12 22a10 10 0 100-20 10 10 0 000 20z" />
-                                </svg>
+                                <i data-lucide="check-circle" class="w-7 h-7"></i>
 
                             @else
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 4v6h6M20 20v-6h-6M5 19A9 9 0 1019 5" />
-                                </svg>
+                                <i data-lucide="refresh-cw" class="w-7 h-7"></i>
                             @endif
 
                         </div>
@@ -91,10 +79,7 @@
                 <button @click="videoOpen = true"
                     class="bg-primary text-white w-24 h-24 rounded-full flex items-center justify-center shadow-2xl relative z-10 hover:scale-110 transition-all">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" viewBox="0 0 24 24"
-                        class="ml-1">
-                        <path d="M8 5v14l11-7z" />
-                    </svg>
+                    <i data-lucide="play" class="fill-white text-white w-10 h-10 ml-1"></i>
 
                     <span class="absolute inset-0 rounded-full bg-primary animate-ping opacity-25"></span>
 

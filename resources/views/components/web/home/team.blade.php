@@ -40,11 +40,19 @@
                     </div>
 
                     <!-- Socials -->
-                    <div class="flex justify-center space-x-4 mb-6 text-gray-400">
-                        <a href="#" class="hover:text-primary transition-colors">Facebook</a>
-                        <a href="#" class="hover:text-primary transition-colors">Twitter</a>
-                        <a href="#" class="hover:text-primary transition-colors">LinkedIn</a>
-                        <a href="#" class="hover:text-primary transition-colors">Instagram</a>
+                    <div class="flex justify-center space-x-6 mb-8 text-gray-400">
+                        <a href="#" class="hover:text-primary transition-colors group/icon">
+                            <i data-lucide="facebook" class="w-5 h-5 group-hover/icon:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="hover:text-primary transition-colors group/icon">
+                            <i data-lucide="twitter" class="w-5 h-5 group-hover/icon:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="hover:text-primary transition-colors group/icon">
+                            <i data-lucide="linkedin" class="w-5 h-5 group-hover/icon:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="hover:text-primary transition-colors group/icon">
+                            <i data-lucide="instagram" class="w-5 h-5 group-hover/icon:scale-110 transition-transform"></i>
+                        </a>
                     </div>
 
                     <!-- Name & Role -->

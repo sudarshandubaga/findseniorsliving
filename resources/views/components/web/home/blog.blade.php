@@ -36,11 +36,8 @@
                     </p>
                     <button
                         class="text-primary font-black text-sm flex items-center group-hover:translate-x-2 transition-transform uppercase tracking-widest">
-                        Continue Reading.....
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" width="16" height="16" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path d="M13 5l7 7-7 7M5 12h14" />
-                        </svg>
+                        <span>Continue Reading</span>
+                        <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
                     </button>
                 </div>
             @endforeach

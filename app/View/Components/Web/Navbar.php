@@ -34,6 +34,7 @@ class Navbar extends Component
             ],
             [
                 "title" => "Browse Listings",
+                "link" => route('listings.index'),
                 "dropdown" => [
                     "By Location",
                     "By Care Type",
@@ -58,7 +59,7 @@ class Navbar extends Component
                     "Expert Insights"
                 ]
             ],
-            ["title" => "Find Care Near You", "link" => "#"],
+            ["title" => "Find Care Near You", "link" => route('listings.index')],
             ["title" => "Compare Options", "link" => "#"]
         ];
         return view('components.web.navbar', compact('menuItems'));

@@ -41,8 +41,10 @@
                     class="col-span-1 sm:col-span-2 bg-white p-5 rounded-sm text-sm outline-none focus:ring-2 focus:ring-primary transition-all shadow-sm"></textarea>
 
                 <button type="submit"
-                    class="bg-primary text-white px-12 py-5 rounded-sm font-bold uppercase tracking-widest hover:bg-opacity-90 transition-all shadow-xl hover:shadow-primary/30 w-full sm:w-fit">
-                    Send Request
+                    class="bg-primary text-white px-12 py-5 rounded-sm font-bold uppercase tracking-widest hover:bg-opacity-90 transition-all shadow-xl hover:shadow-primary/30 w-full sm:w-fit flex items-center justify-center space-x-3 group">
+                    <span>Send Request</span>
+                    <i data-lucide="send"
+                        class="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
                 </button>
 
             </form>

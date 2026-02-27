@@ -10,56 +10,68 @@
         </div>
 
         <!-- Menu -->
-        <div class="hidden xl:flex items-center space-x-4 font-bold text-gray-800 uppercase text-xs">
+        <div class="hidden xl:flex items-center space-x-6 font-bold text-gray-800 uppercase text-xs">
 
-            @foreach($menuItems as $item)
+            <a href="{{ route('home') }}" class="hover:text-primary py-2 transition-colors">Home</a>
 
-                <div class="relative" @mouseenter="activeDropdown = '{{ $item['title'] }}'"
-                    @mouseleave="activeDropdown = null">
-
-                    @if(isset($item['link']))
-                        <a href="{{ $item['link'] }}"
-                            class="flex items-center space-x-1 cursor-pointer hover:text-primary py-2">
-                            <span>{{ $item['title'] }}</span>
-                            @if(isset($item['dropdown']))
-                                <i data-lucide="chevron-down"
-                                    class="w-3 h-3 group-hover:rotate-180 transition-transform duration-300"></i>
-                            @endif
-                        </a>
-                    @else
-                        <div class="flex items-center space-x-1 cursor-pointer hover:text-primary py-2">
-                            <span>{{ $item['title'] }}</span>
-                            @if(isset($item['dropdown']))
-                                <i data-lucide="chevron-down"
-                                    class="w-3 h-3 group-hover:rotate-180 transition-transform duration-300"></i>
-                            @endif
-                        </div>
-                    @endif
-
-                    <!-- Dropdown -->
-                    @if(isset($item['dropdown']))
-                        <div x-show="activeDropdown === '{{ $item['title'] }}'"
-                            x-transition:enter="transition ease-out duration-200"
-                            x-transition:enter-start="opacity-0 translate-y-1"
-                            x-transition:enter-end="opacity-100 translate-y-0"
-                            class="absolute top-full left-0 w-64 bg-white shadow-2xl border-t-4 border-primary z-50">
-
-                            <div class="py-2">
-                                @foreach($item['dropdown'] as $sub)
-                                    <a href="#"
-                                        class="flex items-center justify-between px-6 py-4 text-sm font-bold text-[#1a1a1a] hover:bg-gray-50 hover:text-primary border-b border-gray-50 last:border-0 transition-colors">
-                                        <span>{{ $sub }}</span>
-                                        <i data-lucide="arrow-right"
-                                            class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
+            <!-- Senior Living Options Dropdown -->
+            <div class="relative group" @mouseenter="activeDropdown = 'options'" @mouseleave="activeDropdown = null">
+                <div class="flex items-center space-x-1 cursor-pointer hover:text-primary py-2 transition-colors">
+                    <span>Senior Living Options</span>
+                    <i data-lucide="chevron-down"
+                        class="w-3 h-3 group-hover:rotate-180 transition-transform duration-300"></i>
                 </div>
 
-            @endforeach
+                <div x-show="activeDropdown === 'options'" x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    class="absolute top-full left-0 w-64 bg-white shadow-2xl border-t-4 border-primary z-50">
+                    <div class="py-2">
+                        @foreach($service_types as $type)
+                            <a href="{{ route('listings.index', ['service' => $type->slug]) }}"
+                                class="flex items-center justify-between px-6 py-4 text-sm font-bold text-[#1a1a1a] hover:bg-gray-50 hover:text-primary border-b border-gray-50 last:border-0 transition-colors group/item">
+                                <span>{{ $type->name }}</span>
+                                <i data-lucide="arrow-right"
+                                    class="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <a href="{{ route('listings.index') }}" class="hover:text-primary py-2 transition-colors">Browse
+                Listings</a>
+
+            <!-- Resources Dropdown -->
+            <div class="relative group" @mouseenter="activeDropdown = 'resources'" @mouseleave="activeDropdown = null">
+                <div class="flex items-center space-x-1 cursor-pointer hover:text-primary py-2 transition-colors">
+                    <span>Resources</span>
+                    <i data-lucide="chevron-down"
+                        class="w-3 h-3 group-hover:rotate-180 transition-transform duration-300"></i>
+                </div>
+
+                <div x-show="activeDropdown === 'resources'" x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    class="absolute top-full left-0 w-64 bg-white shadow-2xl border-t-4 border-primary z-50">
+                    <div class="py-2">
+                        @php
+                            $resources = ['Senior Living Guides', 'Caregiver Support', 'Financial & Legal Help', 'Safety & Wellness'];
+                        @endphp
+                        @foreach($resources as $res)
+                            <a href="#"
+                                class="flex items-center justify-between px-6 py-4 text-sm font-bold text-[#1a1a1a] hover:bg-gray-50 hover:text-primary border-b border-gray-50 last:border-0 transition-colors group/item">
+                                <span>{{ $res }}</span>
+                                <i data-lucide="arrow-right"
+                                    class="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="hover:text-primary py-2 transition-colors">Compare</a>
+            <a href="#" class="hover:text-primary py-2 transition-colors">Contact</a>
 
         </div>
 

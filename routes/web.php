@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('web.screens.home');
-})->name('home');
+use App\Http\Controllers\HomeController;
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/listings', [App\Http\Controllers\ListingController::class, 'index'])->name('listings.index');
 Route::get('/listings/{state}', [App\Http\Controllers\ListingController::class, 'index'])->name('listings.state');

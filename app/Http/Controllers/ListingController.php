@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use App\Models\ServiceType;
 use App\Models\State;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,15 @@ class ListingController extends Controller
         if ($city) {
             $cityName = ucwords(str_replace('-', ' ', $city));
             $query->where('city', $cityName);
+        }
+
+        if ($request->has('service')) {
+            $serviceSlug = $request->get('service');
+            $service = ServiceType::where('slug', $serviceSlug)->first();
+
+            if ($service) {
+                $query->whereRaw("FIND_IN_SET(?, service_type_id)", [$service->id]);
+            }
         }
 
         // Add some basic ordering

@@ -10,4 +10,9 @@ class Listing extends Model
     protected $table = 'listings';
 
     public $timestamps = false;
+
+    public function getImageAttribute($image)
+    {
+        return $image ? env('IMAGE_BASE') . $image : env('IMAGE_BASE') . '/assets/images/no-image-default.png';
+    }
 }

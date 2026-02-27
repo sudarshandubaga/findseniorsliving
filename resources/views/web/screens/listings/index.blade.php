@@ -86,7 +86,7 @@
                             <div
                                 class="group bg-white border border-gray-100 rounded-sm overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col">
                                 <div class="relative h-48 overflow-hidden bg-gray-200">
-                                    <img src="https://picsum.photos/seed/{{ $listing->id }}/800/600" alt="{{ $listing->name }}"
+                                    <img src="{{ $listing->image }}" alt="{{ $listing->name }}"
                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                     <div
                                         class="absolute top-4 left-4 bg-primary text-white px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-sm">

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ListingController extends Controller
 {
-    public function index(Request $request, $state = null, $city = null)
+    public function index(Request $request, $country = null, $state = null, $city = null)
     {
         $query = Listing::query();
 
@@ -42,7 +42,7 @@ class ListingController extends Controller
         $query->orderBy('is_featured', 'desc')
             ->orderBy('name', 'asc');
 
-        $listings = $query->paginate(12);
+        $listings = $query->paginate(12)->onEachSide(1);
 
         return view('web.screens.listings.index', compact('listings', 'state', 'city'));
     }

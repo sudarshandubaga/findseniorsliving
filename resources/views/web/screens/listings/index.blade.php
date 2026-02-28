@@ -13,7 +13,8 @@
                 <a href="{{ route('listings.index') }}" class="hover:underline">Listings</a>
                 @if($state)
                     <span class="mx-3">/</span>
-                    <a href="{{ route('listings.state', $state) }}" class="hover:underline">{{ strtoupper($state) }}</a>
+                    <a href="{{ route('listings.index', ['country' => 'usa', 'state' => $state]) }}"
+                        class="hover:underline">{{ strtoupper($state) }}</a>
                 @endif
                 @if($city)
                     <span class="mx-3">/</span>
@@ -86,7 +87,7 @@
                             <div
                                 class="group bg-white border border-gray-100 rounded-sm overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col">
                                 <div class="relative h-48 overflow-hidden bg-gray-200">
-                                    <img src="{{ $listing->image }}" alt="{{ $listing->name }}"
+                                    <img src="{{ $listing->featured_image }}" alt="{{ $listing->name }}"
                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                     <div
                                         class="absolute top-4 left-4 bg-primary text-white px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-sm">

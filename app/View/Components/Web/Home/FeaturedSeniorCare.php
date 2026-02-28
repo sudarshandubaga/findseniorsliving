@@ -2,7 +2,6 @@
 
 namespace App\View\Components\Web\Home;
 
-use App\Models\Listing;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -11,12 +10,9 @@ class FeaturedSeniorCare extends Component
 {
     public $listings;
 
-    public function __construct()
+    public function __construct($listings = null)
     {
-        $this->listings = Listing::where('is_featured', 1)
-            ->inRandomOrder()
-            ->limit(4)
-            ->get();
+        $this->listings = $listings;
     }
 
     public function render(): View|Closure|string

@@ -2,7 +2,6 @@
 
 namespace App\View\Components\Web\Home;
 
-use App\Models\ServiceType;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;

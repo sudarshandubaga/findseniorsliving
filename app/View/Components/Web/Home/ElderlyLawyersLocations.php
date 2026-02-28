@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class LocationListings extends Component
+class ElderlyLawyersLocations extends Component
 {
     public $cities;
     public $states;
@@ -19,6 +19,6 @@ class LocationListings extends Component
 
     public function render(): View|Closure|string
     {
-        return view('components.web.home.location-listings');
+        return view('components.web.home.elderly-lawyers-locations');
     }
 }

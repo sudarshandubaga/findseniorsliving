@@ -15,7 +15,8 @@
                 <a href="{{ route('listings.index') }}"
                     class="text-primary font-bold text-sm uppercase tracking-wider flex items-center hover:underline group whitespace-nowrap">
                     View All
-                    <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    <i data-lucide="arrow-right"
+                        class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
                 </a>
             </div>
         </div>
@@ -44,14 +45,9 @@
                                 </span>
                             </div>
 
-                            <h3
-                                class="text-xl font-bold text-[#1a1a1a] mb-3 group-hover:text-primary transition-colors line-clamp-1">
+                            <h3 class="text-xl font-bold text-[#1a1a1a] mb-3 group-hover:text-primary transition-colors">
                                 {{ $listing->name }}
                             </h3>
-
-                            <p class="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-2">
-                                {{ Str::limit(strip_tags($listing->content), 100) }}
-                            </p>
 
                             <div class="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
                                 <span class="text-primary font-bold text-sm">

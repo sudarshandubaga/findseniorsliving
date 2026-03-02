@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ServiceType;
 use App\Models\Listing;
 use App\Models\ElderlyLawyer;
+use App\Models\Caregiver;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,10 @@ class HomeController extends Controller
 
         $featuredLawyers = ElderlyLawyer::where('featured', 1)
             ->inRandomOrder()
+            ->limit(12)
+            ->get();
+
+        $featuredCaregivers = Caregiver::inRandomOrder()
             ->limit(12)
             ->get();
 
@@ -89,7 +94,7 @@ class HomeController extends Controller
                 ];
             })->toArray();
 
-        return view('web.screens.home', compact('featuredListings', 'featuredLawyers', 'cities', 'states', 'lawyerCities', 'lawyerStates'));
+        return view('web.screens.home', compact('featuredListings', 'featuredLawyers', 'featuredCaregivers', 'cities', 'states', 'lawyerCities', 'lawyerStates'));
     }
 
     private function guessStateCode($name)

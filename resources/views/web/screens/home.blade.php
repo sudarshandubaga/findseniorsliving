@@ -8,6 +8,7 @@
     <x-web.home.location-listings :cities="$cities" :states="$states" />
     <x-web.home.featured-elderly-lawyers :lawyers="$featuredLawyers" />
     <x-web.home.elderly-lawyers-locations :cities="$lawyerCities" :states="$lawyerStates" />
+    <x-web.home.featured-caregivers :caregivers="$featuredCaregivers" />
     <x-web.home.why-choose-us />
     <x-web.home.blog />
 
@@ -127,6 +128,36 @@
                             slidesToShow: 1,
                         }
                     }
+                    ]
+                });
+
+                $('.featured-caregivers-slider').slick({
+                    dots: true,
+                    infinite: true,
+                    speed: 500,
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    autoplaySpeed: 3000,
+                    appendArrows: '#caregivers-nav',
+                    responsive: [{
+                            breakpoint: 1280,
+                            settings: {
+                                slidesToShow: 3,
+                            }
+                        },
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 2,
+                            }
+                        },
+                        {
+                            breakpoint: 640,
+                            settings: {
+                                slidesToShow: 1,
+                            }
+                        }
                     ]
                 });
             });

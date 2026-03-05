@@ -12,20 +12,18 @@ class Hero extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($slides = null)
     {
-        $this->slides = [
+        $this->slides = ($slides && count($slides) > 0) ? $slides : [
             [
                 "title" => "Get Quality Services For Grow Your Business.",
-                "image" => "https://picsum.photos/seed/finance1/1920/1080"
+                "subtitle" => "The Best Choice for Seniors",
+                "image_url" => "https://picsum.photos/seed/finance1/1920/1080"
             ],
             [
                 "title" => "Expert Solutions For Your Financial Success.",
-                "image" => "https://picsum.photos/seed/finance2/1920/1080"
-            ],
-            [
-                "title" => "Innovative Strategies To Scale Your Company.",
-                "image" => "https://picsum.photos/seed/finance3/1920/1080"
+                "subtitle" => "Professional Caregivers",
+                "image_url" => "https://picsum.photos/seed/finance2/1920/1080"
             ]
         ];
     }

@@ -2,14 +2,14 @@
 
 @section('content')
 
-    <x-web.home.hero />
+    <x-web.home.hero :slides="$heroSlides" />
     <x-web.home.service-types />
     <x-web.home.featured-senior-care :listings="$featuredListings" />
     <x-web.home.location-listings :cities="$cities" :states="$states" />
     <x-web.home.featured-elderly-lawyers :lawyers="$featuredLawyers" />
     <x-web.home.elderly-lawyers-locations :cities="$lawyerCities" :states="$lawyerStates" />
     <x-web.home.featured-caregivers :caregivers="$featuredCaregivers" />
-    <x-web.home.why-choose-us />
+    <x-web.home.why-choose-us :features="$whyChooseFeatures" />
     <x-web.home.blog />
 
     <style>
@@ -141,23 +141,23 @@
                     autoplaySpeed: 3000,
                     appendArrows: '#caregivers-nav',
                     responsive: [{
-                            breakpoint: 1280,
-                            settings: {
-                                slidesToShow: 3,
-                            }
-                        },
-                        {
-                            breakpoint: 1024,
-                            settings: {
-                                slidesToShow: 2,
-                            }
-                        },
-                        {
-                            breakpoint: 640,
-                            settings: {
-                                slidesToShow: 1,
-                            }
+                        breakpoint: 1280,
+                        settings: {
+                            slidesToShow: 3,
                         }
+                    },
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 2,
+                        }
+                    },
+                    {
+                        breakpoint: 640,
+                        settings: {
+                            slidesToShow: 1,
+                        }
+                    }
                     ]
                 });
             });

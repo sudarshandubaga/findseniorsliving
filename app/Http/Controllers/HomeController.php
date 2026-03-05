@@ -7,6 +7,8 @@ use App\Models\Listing;
 use App\Models\ElderlyLawyer;
 use App\Models\Caregiver;
 use App\Models\State;
+use App\Models\HeroSlide;
+use App\Models\WhyChooseFeature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -94,7 +96,20 @@ class HomeController extends Controller
                 ];
             })->toArray();
 
-        return view('web.screens.home', compact('featuredListings', 'featuredLawyers', 'featuredCaregivers', 'cities', 'states', 'lawyerCities', 'lawyerStates'));
+        $heroSlides = HeroSlide::orderBy('sort_order')->get();
+        $whyChooseFeatures = WhyChooseFeature::orderBy('sort_order')->get();
+
+        return view('web.screens.home', compact(
+            'featuredListings',
+            'featuredLawyers',
+            'featuredCaregivers',
+            'cities',
+            'states',
+            'lawyerCities',
+            'lawyerStates',
+            'heroSlides',
+            'whyChooseFeatures'
+        ));
     }
 
     private function guessStateCode($name)

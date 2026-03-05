@@ -12,20 +12,18 @@ class WhyChooseUs extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($features = null)
     {
-        $this->features = [
+        $this->features = ($features && count($features) > 0) ? $features : [
             [
                 "title" => "Unique Business Idea",
+                "description" => "Tailored senior living and caregiving plans",
                 "icon" => "lightbulb"
             ],
             [
                 "title" => "Fast Approval",
+                "description" => "Consultations with top elder lawyers today",
                 "icon" => "check-circle"
-            ],
-            [
-                "title" => "Refinancing",
-                "icon" => "refresh"
             ]
         ];
     }

@@ -31,22 +31,12 @@
 
             <div class="space-y-10">
 
-                @foreach($features as $feature)
+                @foreach($features ?? [] as $feature)
                     <div class="flex items-start space-x-6">
 
                         <div
                             class="bg-primary w-14 h-14 flex items-center justify-center rounded-sm shadow-lg mt-1 text-white">
-
-                            @if($feature['icon'] === 'lightbulb')
-                                <i data-lucide="lightbulb" class="w-7 h-7"></i>
-
-                            @elseif($feature['icon'] === 'check-circle')
-                                <i data-lucide="check-circle" class="w-7 h-7"></i>
-
-                            @else
-                                <i data-lucide="refresh-cw" class="w-7 h-7"></i>
-                            @endif
-
+                            <i data-lucide="{{ $feature['icon'] }}" class="w-7 h-7"></i>
                         </div>
 
                         <div>
@@ -54,8 +44,8 @@
                                 {{ $feature['title'] }}
                             </h4>
 
-                            <p class="text-gray-500 leading-relaxed">
-                                Cupiditate lobortis quis eget, luctus at vestibulum vitae ornare pellentesque ipsum
+                            <p class="text-gray-500 leading-relaxed text-sm">
+                                {{ $feature['description'] }}
                             </p>
                         </div>
 

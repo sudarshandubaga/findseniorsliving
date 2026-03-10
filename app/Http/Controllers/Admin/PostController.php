@@ -52,7 +52,7 @@ class PostController extends Controller
         ]);
 
         $data = $request->only('title', 'content', 'status', 'meta_title', 'meta_description', 'meta_keywords');
-        $data['slug'] = Str::slug($request->title);
+        $data['slug'] = $this->generateUniqueSlug($request->title);
 
         // Handle cropped image
         if ($request->filled('cropped_image')) {
@@ -110,7 +110,7 @@ class PostController extends Controller
         ]);
 
         $data = $request->only('title', 'content', 'status', 'meta_title', 'meta_description', 'meta_keywords');
-        $data['slug'] = Str::slug($request->title);
+        $data['slug'] = $this->generateUniqueSlug($request->title, $post->id);
 
         // Handle cropped image
         if ($request->filled('cropped_image')) {
@@ -178,5 +178,20 @@ class PostController extends Controller
             'path' => $imageName,
             'url' => asset('storage/' . $imageName),
         ]);
+    }
+
+    private function generateUniqueSlug($title, $id = null)
+    {
+        $slug = Str::slug($title);
+        $originalSlug = $slug;
+        $count = 1;
+
+        while (Post::where('slug', $slug)->when($id, function ($query, $id) {
+            return $query->where('id', '!=', $id);
+        })->exists()) {
+            $slug = $originalSlug . '-' . $count++;
+        }
+
+        return $slug;
     }
 }

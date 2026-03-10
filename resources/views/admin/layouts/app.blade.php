@@ -7,7 +7,6 @@
     <title>@yield('title', 'Admin Panel') — FindSeniorsLiving</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css'])
-    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -51,23 +50,13 @@
             color: white;
         }
 
-        .ql-container {
+        .tox-tinymce {
             border: 1px solid #e5e7eb !important;
-            border-top: none !important;
-            border-radius: 0 0 0.75rem 0.75rem;
-            min-height: 300px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
+            border-radius: 0.75rem !important;
         }
 
-        .ql-toolbar {
-            border: 1px solid #e5e7eb !important;
-            border-radius: 0.75rem 0.75rem 0 0;
-            background: #f9fafb;
-        }
-
-        .ql-editor {
-            min-height: 300px;
+        .tox .tox-toolbar__group {
+            padding: 0 4px !important;
         }
     </style>
 </head>
@@ -240,7 +229,7 @@
 
     <script src="//unpkg.com/alpinejs" defer></script>
     @vite(['resources/js/app.js'])
-    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/{{ config('services.tinymce.api_key', 'no-api-key') }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
     <script>
         lucide.createIcons();

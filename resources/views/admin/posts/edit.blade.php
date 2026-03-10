@@ -24,8 +24,7 @@
 
                 <div class="bg-white rounded-2xl border border-gray-100 p-6">
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Content</label>
-                    <input type="hidden" name="content" id="content-input">
-                    <div id="content-editor">{!! old('content', $post->content) !!}</div>
+                    <textarea name="content" id="content-editor" class="tinymce-editor">{!! old('content', $post->content) !!}</textarea>
                 </div>
 
                 @include('admin.partials.seo-fields', [
@@ -146,20 +145,19 @@
 
 @push('scripts')
 <script>
-    // Quill Editor
-    var contentQuill = new Quill('#content-editor', {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                [{ 'align': [] }],
-                ['blockquote', 'code-block'],
-                ['link', 'image', 'video'],
-                ['clean']
-            ]
+    // TinyMCE Editor
+    tinymce.init({
+        selector: '#content-editor',
+        plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount',
+        toolbar: 'undo redo | blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+        height: 500,
+        border_width: 0,
+        skin: 'oxide',
+        content_css: 'default',
+        setup: function (editor) {
+            editor.on('change', function () {
+                editor.save();
+            });
         }
     });
 
@@ -266,9 +264,6 @@
         };
     }
 
-    // Form submission
-    document.getElementById('post-form').addEventListener('submit', function() {
-        document.getElementById('content-input').value = contentQuill.root.innerHTML;
-    });
+    // No extra form submission sync needed for TinyMCE when using textarea + editor.save()
 </script>
 @endpush

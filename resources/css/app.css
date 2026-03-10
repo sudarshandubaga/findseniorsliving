@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
     --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
@@ -29,4 +30,12 @@
 
 .container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Ensure TinyMCE content is styled correctly */
+.tiny-content {
+    @apply prose prose-lg max-w-none;
+    @apply prose-headings:text-gray-800 prose-img:rounded-xl;
+    @apply prose-headings:font-bold prose-headings:tracking-tight;
+    @apply prose-a:text-primary prose-a:no-underline hover:prose-a:underline;
 }

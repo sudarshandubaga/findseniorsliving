@@ -47,9 +47,7 @@
                     @endif
 
                     <div class="bg-white rounded-2xl border border-gray-100 p-8 md:p-10">
-                        <div class="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-gray-800
-                            prose-p:text-gray-600 prose-p:leading-relaxed prose-a:text-primary prose-img:rounded-xl
-                            prose-strong:text-gray-800 prose-blockquote:border-primary">
+                        <div class="tiny-content">
                             {!! $post->content !!}
                         </div>
                     </div>

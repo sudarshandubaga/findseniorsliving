@@ -46,12 +46,17 @@
 
                 <ul class="space-y-4 text-gray-500 text-base">
                     @foreach($menu['links'] as $link)
-                        <li class="hover:text-primary cursor-pointer transition-all duration-300 flex items-center group">
+                        <li class="hover:text-primary transition-all duration-300 flex items-center group">
                             <i data-lucide="chevron-right"
                                 class="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform text-primary/50"></i>
-                            {{ $link }}
+                            @if(is_array($link))
+                                <a href="{{ $link['url'] }}" class="cursor-pointer">{{ $link['label'] }}</a>
+                            @else
+                                <span class="cursor-pointer">{{ $link }}</span>
+                            @endif
                         </li>
                     @endforeach
+
                 </ul>
             </div>
         @endforeach

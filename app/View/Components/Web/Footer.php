@@ -30,11 +30,13 @@ class Footer extends Component
                 "links" => [
                     "Living Guides",
                     "Caregiver Support",
+                    ["label" => "City Demographics", "url" => route('city-demographics.index')],
                     "Financial Help",
                     "Safety & Wellness",
                     "Lifestyle Tips"
                 ]
             ],
+
             [
                 "title" => "About",
                 "links" => [

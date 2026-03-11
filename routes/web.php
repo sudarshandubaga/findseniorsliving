@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\CityDemographicsController;
+
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -25,6 +27,11 @@ Route::get('/elderly-lawyers/{country?}/{state?}/{city?}', [ElderlyLawyerControl
 // Blog Frontend
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+
+// City Demographics
+Route::get('/city-demographics', [CityDemographicsController::class, 'index'])->name('city-demographics.index');
+Route::get('/city-demographics/{id}', [CityDemographicsController::class, 'show'])->name('city-demographics.show');
+
 
 // Admin Auth
 Route::prefix('fsl-admin')->name('admin.')->group(function () {

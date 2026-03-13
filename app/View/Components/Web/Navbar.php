@@ -8,12 +8,16 @@ use Illuminate\View\Component;
 
 class Navbar extends Component
 {
+    public $siteLogo;
+    public $siteTitle;
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        $this->siteLogo = \App\Models\Setting::where('key', 'site_logo')->value('value');
+        $this->siteTitle = \App\Models\Setting::where('key', 'site_title')->value('value') ?? config('app.name');
     }
 
     /**

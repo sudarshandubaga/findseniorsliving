@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Panel') — FindSeniorsLiving</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @php $favicon = \App\Models\Setting::where('key', 'site_favicon')->value('value'); @endphp
+    <link rel="icon" type="image/png" href="{{ $favicon ? asset('storage/' . $favicon) : asset('images/favicon.png') }}">
     @vite(['resources/css/app.css'])
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -65,10 +67,14 @@
     <div class="flex min-h-screen" x-data="{ sidebarOpen: true }">
 
         <!-- Sidebar -->
-        <aside class="sidebar w-64 min-h-screen flex flex-col shrink-0 fixed z-30"
-            :class="sidebarOpen ? '' : '-translate-x-full'" style="transition: transform 0.3s ease;">
+        <!-- Sidebar Backdrop (mobile overlay) -->
+        <div x-show="sidebarOpen" @click="sidebarOpen = false" 
+            class="fixed inset-0 bg-black/50 z-20 lg:hidden" x-transition.opacity></div>
+
+        <aside class="sidebar w-64 h-screen flex flex-col shrink-0 fixed z-30 top-0 left-0"
+            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" style="transition: transform 0.3s ease;">
             <!-- Logo -->
-            <div class="h-16 flex items-center px-6 border-b border-white/10">
+            <div class="h-16 flex items-center px-6 border-b border-white/10 shrink-0">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                         <i data-lucide="shield" class="w-4 h-4 text-white"></i>
@@ -77,7 +83,7 @@
                 </div>
             </div>
 
-            <!-- Navigation -->
+            <!-- Navigation (scrollable) -->
             <nav class="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
                 <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest px-3 mb-3">Main</p>
                 <a href="{{ route('admin.dashboard') }}"
@@ -136,26 +142,32 @@
                 </a>
 
                 @if(auth()->user()->isAdmin())
-                    <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest px-3 mb-3 mt-6">Settings</p>
-                    <a href="{{ route('admin.users.index') }}"
-                        class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 text-sm {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                        <i data-lucide="users" class="w-4 h-4"></i>
-                        User Accounts
-                    </a>
+                <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest px-3 mb-3 mt-6">Settings</p>
+                <a href="{{ route('admin.users.index') }}"
+                    class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 text-sm {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    User Accounts
+                </a>
+                <a href="{{ route('admin.settings.index') }}"
+                    class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 text-sm {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                    <i data-lucide="settings-2" class="w-4 h-4"></i>
+                    Site Settings
+                </a>
                 @endif
+
             </nav>
 
-            <!-- User -->
+            <!-- User (pinned to bottom) -->
             <div class="p-4 border-t border-white/10">
                 <a href="{{ route('admin.profile.edit') }}"
                     class="flex items-center gap-3 hover:bg-white/5 p-2 rounded-xl transition-colors">
                     <div class="w-8 h-8 rounded-xl overflow-hidden shrink-0">
                         @if(auth()->user()->avatar)
-                            <img src="{{ auth()->user()->avatar_url }}" alt="" class="w-full h-full object-cover">
+                        <img src="{{ auth()->user()->avatar_url }}" alt="" class="w-full h-full object-cover">
                         @else
-                            <div class="w-full h-full bg-primary/20 flex items-center justify-center">
-                                <i data-lucide="user" class="w-4 h-4 text-primary"></i>
-                            </div>
+                        <div class="w-full h-full bg-primary/20 flex items-center justify-center">
+                            <i data-lucide="user" class="w-4 h-4 text-primary"></i>
+                        </div>
                         @endif
                     </div>
                     <div>
@@ -169,7 +181,7 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 ml-64" :class="sidebarOpen ? 'ml-64' : 'ml-0'" style="transition: margin-left 0.3s ease;">
+        <div class="flex-1" :class="sidebarOpen ? 'lg:ml-64' : 'ml-0'" style="transition: margin-left 0.3s ease;">
             <!-- Top Bar -->
             <header
                 class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 sticky top-0 z-20">
@@ -201,25 +213,25 @@
             <!-- Page Content -->
             <main class="p-6">
                 @if(session('success'))
-                    <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl flex items-center gap-3"
-                        x-data="{ show: true }" x-show="show" x-transition>
-                        <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
-                        <span class="text-sm">{{ session('success') }}</span>
-                        <button @click="show = false" class="ml-auto text-green-400 hover:text-green-600">
-                            <i data-lucide="x" class="w-4 h-4"></i>
-                        </button>
-                    </div>
+                <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl flex items-center gap-3"
+                    x-data="{ show: true }" x-show="show" x-transition>
+                    <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                    <span class="text-sm">{{ session('success') }}</span>
+                    <button @click="show = false" class="ml-auto text-green-400 hover:text-green-600">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
                 @endif
 
                 @if(session('error'))
-                    <div class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center gap-3"
-                        x-data="{ show: true }" x-show="show" x-transition>
-                        <i data-lucide="alert-circle" class="w-5 h-5 text-red-500"></i>
-                        <span class="text-sm">{{ session('error') }}</span>
-                        <button @click="show = false" class="ml-auto text-red-400 hover:text-red-600">
-                            <i data-lucide="x" class="w-4 h-4"></i>
-                        </button>
-                    </div>
+                <div class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center gap-3"
+                    x-data="{ show: true }" x-show="show" x-transition>
+                    <i data-lucide="alert-circle" class="w-5 h-5 text-red-500"></i>
+                    <span class="text-sm">{{ session('error') }}</span>
+                    <button @click="show = false" class="ml-auto text-red-400 hover:text-red-600">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
                 @endif
 
                 @yield('content')
@@ -229,7 +241,9 @@
 
     <script src="//unpkg.com/alpinejs" defer></script>
     @vite(['resources/js/app.js'])
-    <script src="https://cdn.tiny.cloud/1/{{ config('services.tinymce.api_key', 'no-api-key') }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script
+        src="https://cdn.tiny.cloud/1/{{ config('services.tinymce.api_key', 'no-api-key') }}/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
     <script>
         lucide.createIcons();

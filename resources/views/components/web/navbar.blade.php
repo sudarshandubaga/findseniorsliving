@@ -5,7 +5,11 @@
         <!-- Logo -->
         <div class="flex items-center space-x-3">
             <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16">
+                @if($siteLogo)
+                <img src="{{ asset('storage/' . $siteLogo) }}" alt="{{ $siteTitle }}" class="h-16">
+                @else
+                <img src="{{ asset('images/logo.png') }}" alt="{{ $siteTitle }}" class="h-16">
+                @endif
             </a>
         </div>
 
@@ -28,12 +32,12 @@
                     class="absolute top-full left-0 w-64 bg-white shadow-2xl border-t-4 border-primary z-50">
                     <div class="py-2">
                         @foreach($service_types as $type)
-                            <a href="{{ route('listings.index', ['service' => $type->slug]) }}"
-                                class="flex items-center justify-between px-6 py-4 text-sm font-bold text-[#1a1a1a] hover:bg-gray-50 hover:text-primary border-b border-gray-50 last:border-0 transition-colors group/item">
-                                <span>{{ $type->name }}</span>
-                                <i data-lucide="arrow-right"
-                                    class="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
-                            </a>
+                        <a href="{{ route('listings.index', ['service' => $type->slug]) }}"
+                            class="flex items-center justify-between px-6 py-4 text-sm font-bold text-[#1a1a1a] hover:bg-gray-50 hover:text-primary border-b border-gray-50 last:border-0 transition-colors group/item">
+                            <span>{{ $type->name }}</span>
+                            <i data-lucide="arrow-right"
+                                class="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
+                        </a>
                         @endforeach
                     </div>
                 </div>
@@ -56,22 +60,23 @@
                     class="absolute top-full left-0 w-64 bg-white shadow-2xl border-t-4 border-primary z-50">
                     <div class="py-2">
                         @php
-                            $resources = ['Senior Living Guides', 'Caregiver Support', 'Financial & Legal Help', 'Safety & Wellness'];
+                        $resources = ['Senior Living Guides', 'Caregiver Support', 'Financial & Legal Help', 'Safety &
+                        Wellness'];
                         @endphp
                         @foreach($resources as $res)
-                            <a href="#"
-                                class="flex items-center justify-between px-6 py-4 text-sm font-bold text-[#1a1a1a] hover:bg-gray-50 hover:text-primary border-b border-gray-50 last:border-0 transition-colors group/item">
-                                <span>{{ $res }}</span>
-                                <i data-lucide="arrow-right"
-                                    class="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
-                            </a>
+                        <a href="#"
+                            class="flex items-center justify-between px-6 py-4 text-sm font-bold text-[#1a1a1a] hover:bg-gray-50 hover:text-primary border-b border-gray-50 last:border-0 transition-colors group/item">
+                            <span>{{ $res }}</span>
+                            <i data-lucide="arrow-right"
+                                class="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-opacity"></i>
+                        </a>
                         @endforeach
                     </div>
                 </div>
             </div>
 
             <a href="#" class="hover:text-primary py-2 transition-colors">Compare</a>
-            <a href="#" class="hover:text-primary py-2 transition-colors">Contact</a>
+            <a href="{{ route('contact.show') }}" class="hover:text-primary py-2 transition-colors">Contact</a>
 
         </div>
 

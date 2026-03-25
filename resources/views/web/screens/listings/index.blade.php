@@ -42,25 +42,98 @@
                 <!-- Sidebar / Filters (Placeholder for now) -->
                 <div class="lg:w-1/4">
                     <div class="sticky top-32 space-y-8">
-                        <div>
-                            <h4 class="text-xl font-bold mb-6 pb-2 border-b-2 border-primary/20">Refine Search</h4>
-                            <div class="space-y-4">
-                                <input type="text" placeholder="Search by name..."
-                                    class="w-full p-4 bg-gray-50 border border-gray-100 rounded-sm focus:ring-2 focus:ring-primary outline-none transition-all">
+                        <style>
+                            .filter-check input:checked ~ .check-box {
+                                background-color: var(--color-primary, #ff4e00);
+                                border-color: var(--color-primary, #ff4e00);
+                            }
+                            .filter-check input:checked ~ .check-box svg {
+                                opacity: 1;
+                            }
+                            .filter-check input:checked ~ .check-label {
+                                color: var(--color-primary, #ff4e00);
+                            }
+                            .filter-scrollbar::-webkit-scrollbar { width: 4px; }
+                            .filter-scrollbar::-webkit-scrollbar-track { background: #f3f4f6; border-radius: 10px; }
+                            .filter-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+                            .filter-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+                        </style>
+                        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                            <div class="flex items-center justify-between mb-6 pb-3 border-b-2 border-primary/20">
+                                <h4 class="text-lg font-black text-[#1a1a1a] uppercase tracking-wider">Filters</h4>
+                                @if(request()->hasAny(['search', 'location', 'services', 'amenities']))
+                                    <a href="{{ url()->current() }}" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                                        <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Clear All
+                                    </a>
+                                @endif
+                            </div>
+                            <form action="{{ url()->current() }}" method="GET" class="space-y-7">
+                                @if(request('sort'))
+                                    <input type="hidden" name="sort" value="{{ request('sort') }}">
+                                @endif
 
-                                <select
-                                    class="w-full p-4 bg-gray-50 border border-gray-100 rounded-sm focus:ring-2 focus:ring-primary outline-none transition-all">
-                                    <option>All Care Types</option>
-                                    <option>Assisted Living</option>
-                                    <option>Nursing Home</option>
-                                    <option>Memory Care</option>
-                                </select>
+                                <!-- Search -->
+                                <div>
+                                    <h5 class="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-3 flex items-center gap-2">
+                                        <i data-lucide="search" class="w-3.5 h-3.5"></i> Search
+                                    </h5>
+                                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name..."
+                                        class="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all placeholder-gray-400 text-sm font-medium">
+                                </div>
 
-                                <button
-                                    class="w-full bg-primary text-white py-4 font-bold uppercase tracking-widest hover:bg-opacity-90 shadow-lg transition-all">
+                                <!-- Location -->
+                                <div>
+                                    <h5 class="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-3 flex items-center gap-2">
+                                        <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Location
+                                    </h5>
+                                    <input type="text" name="location" value="{{ request('location') }}" placeholder="City, State, or Zip Code"
+                                        class="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all placeholder-gray-400 text-sm font-medium">
+                                </div>
+
+                                <!-- Care Type Filter -->
+                                <div>
+                                    <h5 class="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-3 flex items-center gap-2">
+                                        <i data-lucide="heart" class="w-3.5 h-3.5"></i> Care Type
+                                    </h5>
+                                    <div class="flex flex-col gap-2.5 max-h-56 overflow-y-auto filter-scrollbar pr-1">
+                                        @foreach($serviceTypes ?? [] as $st)
+                                            <label class="filter-check cursor-pointer relative flex items-center group">
+                                                <input type="checkbox" name="services[]" value="{{ $st->id }}" class="sr-only"
+                                                    {{ in_array($st->id, (array)request('services', [])) ? 'checked' : '' }}>
+                                                <div class="check-box w-[18px] h-[18px] rounded border-2 border-gray-200 bg-white mr-3 flex items-center justify-center transition-all duration-200 group-hover:border-primary/50 shrink-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white opacity-0 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                </div>
+                                                <span class="check-label text-sm font-semibold text-gray-500 group-hover:text-primary transition-colors leading-tight">{{ $st->name }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <!-- Service Type Filter (Amenities) -->
+                                <div>
+                                    <h5 class="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-3 flex items-center gap-2">
+                                        <i data-lucide="list-checks" class="w-3.5 h-3.5"></i> Service Type
+                                    </h5>
+                                    <div class="flex flex-col gap-2.5 max-h-56 overflow-y-auto filter-scrollbar pr-1">
+                                        @foreach($amenities ?? [] as $am)
+                                            <label class="filter-check cursor-pointer relative flex items-center group">
+                                                <input type="checkbox" name="amenities[]" value="{{ $am->id }}" class="sr-only"
+                                                    {{ in_array($am->id, (array)request('amenities', [])) ? 'checked' : '' }}>
+                                                <div class="check-box w-[18px] h-[18px] rounded border-2 border-gray-200 bg-white mr-3 flex items-center justify-center transition-all duration-200 group-hover:border-primary/50 shrink-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white opacity-0 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                </div>
+                                                <span class="check-label text-sm font-semibold text-gray-500 group-hover:text-primary transition-colors leading-tight">{{ $am->name }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full bg-primary text-white py-3.5 px-6 font-black uppercase tracking-widest text-xs hover:bg-opacity-90 rounded-xl shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                    <i data-lucide="filter" class="w-4 h-4"></i>
                                     Apply Filters
                                 </button>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -74,10 +147,10 @@
 
                         <div class="flex items-center space-x-4">
                             <span class="text-sm font-bold uppercase tracking-widest text-gray-400">Sort By:</span>
-                            <select class="bg-transparent font-bold text-sm focus:outline-none cursor-pointer">
-                                <option>Newest</option>
-                                <option>Name (A-Z)</option>
-                                <option>Most Popular</option>
+                            <select class="bg-transparent font-bold text-sm focus:outline-none cursor-pointer" onchange="window.location.href=this.value">
+                                <option value="{{ request()->fullUrlWithQuery(['sort' => 'newest', 'page' => null]) }}" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest</option>
+                                <option value="{{ request()->fullUrlWithQuery(['sort' => 'name_asc', 'page' => null]) }}" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Name (A-Z)</option>
+                                <option value="{{ request()->fullUrlWithQuery(['sort' => 'popular', 'page' => null]) }}" {{ request('sort') == 'popular' ? 'selected' : '' }}>Most Popular</option>
                             </select>
                         </div>
                     </div>

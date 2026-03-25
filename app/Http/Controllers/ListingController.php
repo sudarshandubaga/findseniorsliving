@@ -29,22 +29,68 @@ class ListingController extends Controller
             $query->where('city', $cityName);
         }
 
-        if ($request->has('service')) {
-            $serviceSlug = $request->get('service');
-            $service = ServiceType::where('slug', $serviceSlug)->first();
+        if ($request->filled('search')) {
+            $query->where('name', 'LIKE', '%' . $request->input('search') . '%');
+        }
 
+        // Handle generic location input which checks city, state, or zipcode
+        if ($request->filled('location')) {
+            $location = $request->input('location');
+            $query->where(function($q) use ($location) {
+                $q->where('city', 'LIKE', '%' . $location . '%')
+                  ->orWhere('state', 'LIKE', '%' . $location . '%')
+                  ->orWhere('zipcode', 'LIKE', '%' . $location . '%');
+            });
+        }
+
+        $serviceTypes = ServiceType::orderBy('name', 'asc')->get();
+        // Since we don't have an Amenity model, fetch from DB
+        $amenities = \Illuminate\Support\Facades\DB::connection('mysql2')->table('amenities')->orderBy('name', 'asc')->get();
+
+        // Care Type -> Services array
+        if ($request->has('services') && is_array($request->input('services'))) {
+            $serviceIds = $request->input('services');
+            $query->where(function($q) use ($serviceIds) {
+                foreach ($serviceIds as $id) {
+                    $q->orWhereRaw("FIND_IN_SET(?, service_type_id)", [$id]);
+                }
+            });
+        } elseif ($request->filled('service')) {
+            // Fallback for older single service slug URL
+            $serviceSlug = $request->input('service');
+            $service = ServiceType::where('slug', $serviceSlug)->first();
             if ($service) {
                 $query->whereRaw("FIND_IN_SET(?, service_type_id)", [$service->id]);
             }
         }
 
-        // Add some basic ordering
-        $query->orderBy('is_featured', 'desc')
-            ->orderBy('name', 'asc');
+        // Service Type -> Amenities array
+        if ($request->has('amenities') && is_array($request->input('amenities'))) {
+            $amenityIds = $request->input('amenities');
+            $query->where(function($q) use ($amenityIds) {
+                foreach ($amenityIds as $id) {
+                    $q->orWhereRaw("FIND_IN_SET(?, amenities_type_id)", [$id]);
+                }
+            });
+        }
 
-        $listings = $query->paginate(12)->onEachSide(1);
+        // Add sorting
+        if ($request->filled('sort')) {
+            if ($request->input('sort') == 'name_asc') {
+                $query->orderBy('name', 'asc');
+            } elseif ($request->input('sort') == 'popular') {
+                $query->orderBy('rating_point', 'desc')->orderBy('name', 'asc');
+            } else {
+                // newest
+                $query->orderBy('id', 'desc');
+            }
+        } else {
+            $query->orderBy('is_featured', 'desc')->orderBy('name', 'asc');
+        }
 
-        return view('web.screens.listings.index', compact('listings', 'state', 'city'));
+        $listings = $query->paginate(12)->withQueryString()->onEachSide(1);
+
+        return view('web.screens.listings.index', compact('listings', 'state', 'city', 'serviceTypes', 'amenities'));
     }
 
     private function getStateCode($name)

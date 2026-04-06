@@ -40,7 +40,7 @@ class Footer extends Component
             [
                 "title" => "Resources",
                 "links" => [
-                    ["label" => "City Demographics", "url" => route('city-demographics.index')],
+                    ["label" => "Country Demographics", "url" => route('country-demographics.index')],
                     ["label" => "Our Blog", "url" => route('blog.index')],
                     ["label" => "Senior Care Listings", "url" => route('listings.index')],
                     ["label" => "Elderly Lawyers", "url" => route('lawyers.index')],

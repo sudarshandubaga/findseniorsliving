@@ -30,9 +30,10 @@ Route::get('/elderly-lawyers/{country?}/{state?}/{city?}', [ElderlyLawyerControl
 Route::get('/blog', [BlogController::class , 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class , 'show'])->name('blog.show');
 
-// City Demographics
-Route::get('/city-demographics', [CityDemographicsController::class , 'index'])->name('city-demographics.index');
-Route::get('/city-demographics/{id}', [CityDemographicsController::class , 'show'])->name('city-demographics.show');
+// Country Demographics (Country → State → City)
+Route::get('/country-demographics', [CityDemographicsController::class , 'index'])->name('country-demographics.index');
+Route::get('/country-demographics/state/{stateId}', [CityDemographicsController::class , 'showState'])->name('country-demographics.state');
+Route::get('/country-demographics/city/{id}', [CityDemographicsController::class , 'show'])->name('country-demographics.show');
 
 // CMS Pages
 Route::get('/p/{slug}', [\App\Http\Controllers\PageController::class , 'show'])->name('pages.show');

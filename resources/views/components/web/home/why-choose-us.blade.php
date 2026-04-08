@@ -9,7 +9,7 @@
                 ✕
             </button>
 
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Company Video"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/0vmJsw72V9I" title="Company Video"
                 frameborder="0" allowfullscreen>
             </iframe>
 
@@ -59,8 +59,8 @@
         <div class="relative group">
 
             <div class="rounded-sm overflow-hidden shadow-2xl">
-                <img src="https://picsum.photos/seed/why/1000/800" alt="Team working" class="w-full h-full object-cover"
-                    referrerpolicy="no-referrer">
+                <img src="https://img.youtube.com/vi/0vmJsw72V9I/maxresdefault.jpg" alt="Team working"
+                    class="w-full h-full object-cover" referrerpolicy="no-referrer">
             </div>
 
             <!-- Play Button -->

@@ -13,6 +13,19 @@ class ListingController extends Controller
     {
         $query = Listing::query();
 
+        // Country filtering
+        $userCountry = session('user_country', 'United States');
+        $dbCountry = $userCountry;
+        if ($userCountry === 'United States') {
+            $dbCountry = ['USA', 'United States'];
+        }
+
+        if (is_array($dbCountry)) {
+            $query->whereIn('country', $dbCountry);
+        } else {
+            $query->where('country', $dbCountry);
+        }
+
         // Handle state code mapping
         if ($state) {
             $stateCode = strlen($state) === 2 ? strtoupper($state) : $this->getStateCode($state);

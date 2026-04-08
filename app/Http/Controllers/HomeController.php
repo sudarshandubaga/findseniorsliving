@@ -11,17 +11,38 @@ use App\Models\HeroSlide;
 use App\Models\WhyChooseFeature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        // Get user's country from session (set by middleware)
+        $userCountry = session('user_country', 'United States');
+
+        // Normalize country for DB query
+        $dbCountry = $userCountry;
+        if ($userCountry === 'United States') {
+            $dbCountry = ['USA', 'United States'];
+        }
+
         $featuredListings = Listing::where('is_featured', 1)
+            ->when(is_array($dbCountry), function($q) use ($dbCountry) {
+                return $q->whereIn('country', $dbCountry);
+            }, function($q) use ($dbCountry) {
+                return $q->where('country', $dbCountry);
+            })
             ->inRandomOrder()
             ->limit(12)
             ->get();
 
         $featuredLawyers = ElderlyLawyer::where('featured', 1)
+            ->when(is_array($dbCountry), function($q) use ($dbCountry) {
+                return $q->whereIn('country', $dbCountry);
+            }, function($q) use ($dbCountry) {
+                return $q->where('country', $dbCountry);
+            })
             ->inRandomOrder()
             ->limit(12)
             ->get();
@@ -34,13 +55,18 @@ class HomeController extends Controller
         $cities = Listing::select('city', 'state', 'country', DB::raw('count(*) as count'))
             ->whereNotNull('city')
             ->where('city', '!=', '')
+            ->when(is_array($dbCountry), function($q) use ($dbCountry) {
+                return $q->whereIn('country', $dbCountry);
+            }, function($q) use ($dbCountry) {
+                return $q->where('country', $dbCountry);
+            })
             ->groupBy('city', 'state', 'country')
             ->orderBy('count', 'desc')
             ->limit(90)
             ->get()
             ->map(function ($item) {
                 return [
-                    'name' => $item->city . ', ' . $item->state,
+                    'name' => $item->city . ', ' . $this->getStateFullName($item->state),
                     'count' => $item->count,
                     'city_slug' => strtolower(str_replace(' ', '-', $item->city)),
                     'state_slug' => strtolower($item->state),
@@ -51,12 +77,17 @@ class HomeController extends Controller
         $states = Listing::select('state', 'country', DB::raw('count(*) as count'))
             ->whereNotNull('state')
             ->where('state', '!=', '')
+            ->when(is_array($dbCountry), function($q) use ($dbCountry) {
+                return $q->whereIn('country', $dbCountry);
+            }, function($q) use ($dbCountry) {
+                return $q->where('country', $dbCountry);
+            })
             ->groupBy('state', 'country')
             ->orderBy('count', 'desc')
             ->get()
             ->map(function ($item) {
                 return [
-                    'name' => $item->state,
+                    'name' => $this->getStateFullName($item->state),
                     'count' => $item->count,
                     'slug' => strtolower(str_replace(' ', '-', $item->state)),
                     'country_slug' => strtolower($item->country)
@@ -67,13 +98,18 @@ class HomeController extends Controller
         $lawyerCities = ElderlyLawyer::select('city', 'state', 'country', DB::raw('count(*) as count'))
             ->whereNotNull('city')
             ->where('city', '!=', '')
+            ->when(is_array($dbCountry), function($q) use ($dbCountry) {
+                return $q->whereIn('country', $dbCountry);
+            }, function($q) use ($dbCountry) {
+                return $q->where('country', $dbCountry);
+            })
             ->groupBy('city', 'state', 'country')
             ->orderBy('count', 'desc')
             ->limit(90)
             ->get()
             ->map(function ($item) {
                 return [
-                    'name' => $item->city . ', ' . $item->state,
+                    'name' => $item->city . ', ' . $this->getStateFullName($item->state),
                     'count' => $item->count,
                     'city_slug' => strtolower(str_replace(' ', '-', $item->city)),
                     'state_slug' => strtolower($item->state),
@@ -84,12 +120,17 @@ class HomeController extends Controller
         $lawyerStates = ElderlyLawyer::select('state', 'country', DB::raw('count(*) as count'))
             ->whereNotNull('state')
             ->where('state', '!=', '')
+            ->when(is_array($dbCountry), function($q) use ($dbCountry) {
+                return $q->whereIn('country', $dbCountry);
+            }, function($q) use ($dbCountry) {
+                return $q->where('country', $dbCountry);
+            })
             ->groupBy('state', 'country')
             ->orderBy('count', 'desc')
             ->get()
             ->map(function ($item) {
                 return [
-                    'name' => $item->state,
+                    'name' => $this->getStateFullName($item->state),
                     'count' => $item->count,
                     'slug' => strtolower(str_replace(' ', '-', $item->state)),
                     'country_slug' => strtolower($item->country)
@@ -110,6 +151,74 @@ class HomeController extends Controller
             'heroSlides',
             'whyChooseFeatures'
         ));
+    }
+
+    public function setCountry(Request $request)
+    {
+        $request->validate([
+            'country' => 'required|string'
+        ]);
+
+        session(['user_country' => $request->country]);
+
+        return redirect()->back();
+    }
+
+    private function getStateFullName($code)
+    {
+        $states = [
+            'AL' => 'Alabama',
+            'AK' => 'Alaska',
+            'AZ' => 'Arizona',
+            'AR' => 'Arkansas',
+            'CA' => 'California',
+            'CO' => 'Colorado',
+            'CT' => 'Connecticut',
+            'DE' => 'Delaware',
+            'FL' => 'Florida',
+            'GA' => 'Georgia',
+            'HI' => 'Hawaii',
+            'ID' => 'Idaho',
+            'IL' => 'Illinois',
+            'IN' => 'Indiana',
+            'IA' => 'Iowa',
+            'KS' => 'Kansas',
+            'KY' => 'Kentucky',
+            'LA' => 'Louisiana',
+            'ME' => 'Maine',
+            'MD' => 'Maryland',
+            'MA' => 'Massachusetts',
+            'MI' => 'Michigan',
+            'MN' => 'Minnesota',
+            'MS' => 'Mississippi',
+            'MO' => 'Missouri',
+            'MT' => 'Montana',
+            'NE' => 'Nebraska',
+            'NV' => 'Nevada',
+            'NH' => 'New Hampshire',
+            'NJ' => 'New Jersey',
+            'NM' => 'New Mexico',
+            'NY' => 'New York',
+            'NC' => 'North Carolina',
+            'ND' => 'North Dakota',
+            'OH' => 'Ohio',
+            'OK' => 'Oklahoma',
+            'OR' => 'Oregon',
+            'PA' => 'Pennsylvania',
+            'RI' => 'Rhode Island',
+            'SC' => 'South Carolina',
+            'SD' => 'South Dakota',
+            'TN' => 'Tennessee',
+            'TX' => 'Texas',
+            'UT' => 'Utah',
+            'VT' => 'Vermont',
+            'VA' => 'Virginia',
+            'WA' => 'Washington',
+            'WV' => 'West Virginia',
+            'WI' => 'Wisconsin',
+            'WY' => 'Wyoming'
+        ];
+        return $states[strtoupper($code)] ?? $code;
     }
 
     private function guessStateCode($name)

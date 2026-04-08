@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ForgotPasswordController;
 
 Route::get('/', [HomeController::class , 'index'])->name('home');
+Route::post('/set-country', [HomeController::class, 'setCountry'])->name('set-country');
 
 Route::get('/senior-care/{country?}/{state?}/{city?}', [ListingController::class , 'index'])->name('listings.index');
 Route::get('/elderly-lawyers/{country?}/{state?}/{city?}', [ElderlyLawyerController::class , 'index'])->name('lawyers.index');

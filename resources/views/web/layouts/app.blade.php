@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <title>Find Seniors Living</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @php $favicon = \App\Models\Setting::where('key', 'site_favicon')->value('value'); @endphp
-    <link rel="icon" type="image/png" href="{{ $favicon ? asset('storage/' . $favicon) : asset('images/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
 
     @vite(['resources/css/app.css'])
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />

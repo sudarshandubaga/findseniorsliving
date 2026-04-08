@@ -19,7 +19,7 @@
             <!-- Country Dropdown -->
             <div x-data="{ open: false }" class="relative">
                 @php
-                    $currentCountryData = $availableCountries[$currentCountryName] ?? reset($availableCountries);
+                    $currentCountryData = $availableCountries[(string)($currentCountryName ?? '')] ?? reset($availableCountries);
                 @endphp
                 <button @click="open = !open" @click.away="open = false"
                     class="flex items-center space-x-2 hover:opacity-80 transition-opacity uppercase tracking-widest font-bold">

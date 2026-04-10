@@ -21,12 +21,12 @@
         <!-- Left Content -->
         <div>
             <h2 class="text-5xl font-bold text-[#1a1a1a] mb-8 leading-tight tracking-tight">
-                Why People Choose Our Company
+                Why Families Choose FindCarez
             </h2>
 
             <p class="text-gray-500 mb-12 leading-relaxed text-lg">
-                We're on a mission to start a conversation with your customers in this fast connected world.
-                Let's discover, build and grow your digital business.
+                We make finding the right senior care simple and stress-free. Connect with trusted caregivers, senior
+                living communities, and elder law experts—all tailored to your family’s needs.
             </p>
 
             <div class="space-y-10">

@@ -15,6 +15,13 @@
 </head>
 
 <body class="min-h-screen bg-white">
+    <div id="preloader">
+        <div class="loader-wrapper">
+            <div class="loader"></div>
+            <img src="{{ asset('images/favicon.png') }}" alt="Loading..." class="loader-logo">
+        </div>
+    </div>
+
 
     <x-web.topbar />
     <x-web.navbar />
@@ -31,6 +38,14 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
         lucide.createIcons();
+
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            preloader.classList.add('fade-out');
+            setTimeout(() => {
+                preloader.remove();
+            }, 500);
+        });
     </script>
     @stack('scripts')
 </body>

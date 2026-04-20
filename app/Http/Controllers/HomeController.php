@@ -51,16 +51,22 @@ class HomeController extends Controller
             ->limit(12)
             ->get();
 
+        $database2 = config('database.connections.mysql2.database');
+
         // Location Listings Data
-        $cities = Listing::select('city', 'state', 'country', DB::raw('count(*) as count'))
-            ->whereNotNull('city')
-            ->where('city', '!=', '')
-            ->when(is_array($dbCountry), function($q) use ($dbCountry) {
-                return $q->whereIn('country', $dbCountry);
-            }, function($q) use ($dbCountry) {
-                return $q->where('country', $dbCountry);
+        $cities = Listing::select('csz.city', 'csz.state', 'listings.country', DB::raw('count(DISTINCT listings.id) as count'))
+            ->join($database2 . '.citystatzip as csz', function($join) {
+                $join->on('listings.city', '=', 'csz.city')
+                     ->on('listings.state', '=', 'csz.state');
             })
-            ->groupBy('city', 'state', 'country')
+            ->whereNotNull('listings.city')
+            ->where('listings.city', '!=', '')
+            ->when(is_array($dbCountry), function($q) use ($dbCountry) {
+                return $q->whereIn('listings.country', $dbCountry);
+            }, function($q) use ($dbCountry) {
+                return $q->where('listings.country', $dbCountry);
+            })
+            ->groupBy('csz.city', 'csz.state', 'listings.country')
             ->orderBy('count', 'desc')
             ->limit(90)
             ->get()
@@ -74,15 +80,16 @@ class HomeController extends Controller
                 ];
             })->toArray();
 
-        $states = Listing::select('state', 'country', DB::raw('count(*) as count'))
-            ->whereNotNull('state')
-            ->where('state', '!=', '')
+        $states = Listing::select('csz.state', 'listings.country', DB::raw('count(DISTINCT listings.id) as count'))
+            ->join($database2 . '.citystatzip as csz', 'listings.state', '=', 'csz.state')
+            ->whereNotNull('listings.state')
+            ->where('listings.state', '!=', '')
             ->when(is_array($dbCountry), function($q) use ($dbCountry) {
-                return $q->whereIn('country', $dbCountry);
+                return $q->whereIn('listings.country', $dbCountry);
             }, function($q) use ($dbCountry) {
-                return $q->where('country', $dbCountry);
+                return $q->where('listings.country', $dbCountry);
             })
-            ->groupBy('state', 'country')
+            ->groupBy('csz.state', 'listings.country')
             ->orderBy('count', 'desc')
             ->get()
             ->map(function ($item) {
@@ -95,15 +102,19 @@ class HomeController extends Controller
             })->toArray();
 
         // Lawyer Location Data
-        $lawyerCities = ElderlyLawyer::select('city', 'state', 'country', DB::raw('count(*) as count'))
-            ->whereNotNull('city')
-            ->where('city', '!=', '')
-            ->when(is_array($dbCountry), function($q) use ($dbCountry) {
-                return $q->whereIn('country', $dbCountry);
-            }, function($q) use ($dbCountry) {
-                return $q->where('country', $dbCountry);
+        $lawyerCities = ElderlyLawyer::select('csz.city', 'csz.state', 'elderly_lawyer.country', DB::raw('count(DISTINCT elderly_lawyer.id) as count'))
+            ->join($database2 . '.citystatzip as csz', function($join) {
+                $join->on('elderly_lawyer.city', '=', 'csz.city')
+                     ->on('elderly_lawyer.state', '=', 'csz.state');
             })
-            ->groupBy('city', 'state', 'country')
+            ->whereNotNull('elderly_lawyer.city')
+            ->where('elderly_lawyer.city', '!=', '')
+            ->when(is_array($dbCountry), function($q) use ($dbCountry) {
+                return $q->whereIn('elderly_lawyer.country', $dbCountry);
+            }, function($q) use ($dbCountry) {
+                return $q->where('elderly_lawyer.country', $dbCountry);
+            })
+            ->groupBy('csz.city', 'csz.state', 'elderly_lawyer.country')
             ->orderBy('count', 'desc')
             ->limit(90)
             ->get()
@@ -117,15 +128,16 @@ class HomeController extends Controller
                 ];
             })->toArray();
 
-        $lawyerStates = ElderlyLawyer::select('state', 'country', DB::raw('count(*) as count'))
-            ->whereNotNull('state')
-            ->where('state', '!=', '')
+        $lawyerStates = ElderlyLawyer::select('csz.state', 'elderly_lawyer.country', DB::raw('count(DISTINCT elderly_lawyer.id) as count'))
+            ->join($database2 . '.citystatzip as csz', 'elderly_lawyer.state', '=', 'csz.state')
+            ->whereNotNull('elderly_lawyer.state')
+            ->where('elderly_lawyer.state', '!=', '')
             ->when(is_array($dbCountry), function($q) use ($dbCountry) {
-                return $q->whereIn('country', $dbCountry);
+                return $q->whereIn('elderly_lawyer.country', $dbCountry);
             }, function($q) use ($dbCountry) {
-                return $q->where('country', $dbCountry);
+                return $q->where('elderly_lawyer.country', $dbCountry);
             })
-            ->groupBy('state', 'country')
+            ->groupBy('csz.state', 'elderly_lawyer.country')
             ->orderBy('count', 'desc')
             ->get()
             ->map(function ($item) {

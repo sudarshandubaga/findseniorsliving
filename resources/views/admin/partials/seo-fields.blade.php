@@ -30,5 +30,12 @@
                 class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 placeholder="keyword1, keyword2, keyword3...">
         </div>
+
+        <div>
+            <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Canonical URL</label>
+            <input type="url" name="canonical_url" value="{{ old('canonical_url', $canonicalUrl ?? '') }}"
+                class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                placeholder="https://example.com/canonical-url">
+        </div>
     </div>
 </div>

@@ -52,6 +52,12 @@
                                     class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                                     placeholder="keyword1, keyword2...">
                             </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Canonical URL</label>
+                                <input type="url" name="canonical_url" value="{{ old('canonical_url') }}"
+                                    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                                    placeholder="https://example.com/canonical-url">
+                            </div>
                         </div>
                     </div>
 
@@ -122,6 +128,9 @@
                                 <input type="text" name="meta_keywords" value="{{ $category->meta_keywords }}"
                                     class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                                     placeholder="Meta Keywords...">
+                                <input type="url" name="canonical_url" value="{{ $category->canonical_url }}"
+                                    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                                    placeholder="Canonical URL...">
                             </div>
                         </form>
                     </div>

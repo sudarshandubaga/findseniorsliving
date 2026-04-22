@@ -28,6 +28,7 @@ class TagController extends Controller
             'meta_title' => $request->meta_title,
             'meta_description' => $request->meta_description,
             'meta_keywords' => $request->meta_keywords,
+            'canonical_url' => $request->canonical_url,
         ]);
 
         return redirect()->route('admin.tags.index')->with('success', 'Tag created successfully.');
@@ -45,6 +46,7 @@ class TagController extends Controller
             'meta_title' => $request->meta_title,
             'meta_description' => $request->meta_description,
             'meta_keywords' => $request->meta_keywords,
+            'canonical_url' => $request->canonical_url,
         ]);
 
         return redirect()->route('admin.tags.index')->with('success', 'Tag updated successfully.');

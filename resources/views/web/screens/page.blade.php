@@ -1,5 +1,18 @@
 @extends('web.layouts.app')
 
+@section('title', $page->meta_title ?: $page->title)
+
+@push('meta')
+    @if($page->meta_description)
+        <meta name="description" content="{{ $page->meta_description }}">
+    @endif
+    @if($page->meta_keywords)
+        <meta name="keywords" content="{{ $page->meta_keywords }}">
+    @endif
+    @if($page->canonical_url)
+        <link rel="canonical" href="{{ $page->canonical_url }}">
+    @endif
+@endpush
 @section('content')
 <!-- Hero / Breadcrumb Section -->
 <div class="bg-gray-900 py-32 relative overflow-hidden">

@@ -31,6 +31,7 @@
                     'metaTitle' => old('meta_title', $post->meta_title),
                     'metaDescription' => old('meta_description', $post->meta_description),
                     'metaKeywords' => old('meta_keywords', $post->meta_keywords),
+                    'canonicalUrl' => old('canonical_url', $post->canonical_url),
                 ])
             </div>
 

@@ -28,6 +28,7 @@ class CategoryController extends Controller
             'meta_title' => $request->meta_title,
             'meta_description' => $request->meta_description,
             'meta_keywords' => $request->meta_keywords,
+            'canonical_url' => $request->canonical_url,
         ]);
 
         return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
@@ -45,6 +46,7 @@ class CategoryController extends Controller
             'meta_title' => $request->meta_title,
             'meta_description' => $request->meta_description,
             'meta_keywords' => $request->meta_keywords,
+            'canonical_url' => $request->canonical_url,
         ]);
 
         return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');

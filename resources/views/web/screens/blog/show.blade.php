@@ -9,6 +9,9 @@
     @if($post->meta_keywords)
         <meta name="keywords" content="{{ $post->meta_keywords }}">
     @endif
+    @if($post->canonical_url)
+        <link rel="canonical" href="{{ $post->canonical_url }}">
+    @endif
 @endpush
 
 @section('content')

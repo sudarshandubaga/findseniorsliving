@@ -51,7 +51,7 @@ class PostController extends Controller
             'status' => 'required|in:draft,published',
         ]);
 
-        $data = $request->only('title', 'content', 'status', 'meta_title', 'meta_description', 'meta_keywords');
+        $data = $request->only('title', 'content', 'status', 'meta_title', 'meta_description', 'meta_keywords', 'canonical_url');
         $data['slug'] = $this->generateUniqueSlug($request->title);
 
         // Handle cropped image
@@ -109,7 +109,7 @@ class PostController extends Controller
             'status' => 'required|in:draft,published',
         ]);
 
-        $data = $request->only('title', 'content', 'status', 'meta_title', 'meta_description', 'meta_keywords');
+        $data = $request->only('title', 'content', 'status', 'meta_title', 'meta_description', 'meta_keywords', 'canonical_url');
         $data['slug'] = $this->generateUniqueSlug($request->title, $post->id);
 
         // Handle cropped image

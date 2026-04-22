@@ -35,6 +35,7 @@ class PageController extends Controller
             'meta_title' => $request->meta_title,
             'meta_description' => $request->meta_description,
             'meta_keywords' => $request->meta_keywords,
+            'canonical_url' => $request->canonical_url,
         ]);
 
         return redirect()->route('admin.pages.index')->with('success', 'Page created successfully.');
@@ -59,6 +60,7 @@ class PageController extends Controller
             'meta_title' => $request->meta_title,
             'meta_description' => $request->meta_description,
             'meta_keywords' => $request->meta_keywords,
+            'canonical_url' => $request->canonical_url,
         ]);
 
         return redirect()->route('admin.pages.index')->with('success', 'Page updated successfully.');

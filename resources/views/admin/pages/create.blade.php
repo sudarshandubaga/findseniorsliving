@@ -27,6 +27,7 @@
                 'metaTitle' => old('meta_title'),
                 'metaDescription' => old('meta_description'),
                 'metaKeywords' => old('meta_keywords'),
+                'canonicalUrl' => old('canonical_url'),
             ])
 
             <div class="flex gap-3">
